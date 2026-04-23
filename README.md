@@ -242,7 +242,7 @@ Pull requests welcome for bug fixes and content additions (duas, typing texts, t
 
 ## Author
 
-**S.M. Mehedy Kawser (Klinger)**<br>
+**S.M. Mehedy Kawser**<br>
 GitHub: [@mehedyk](https://github.com/mehedyk) | Portfolio: [mehedy.netlify.app](https://mehedy.netlify.app)<br>
 Final-year BSc Software Engineering, Daffodil International University
 
