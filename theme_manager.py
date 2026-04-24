@@ -91,7 +91,7 @@ class ThemeManager:
         }}
         QLabel#ArabicLabel {{
             color: {text_ar};
-            font-family: 'Amiri', 'Scheherazade New', 'Arial', serif;
+            font-family: 'NotoNaskhArabic', 'NotoSansArabic', 'DejaVu Sans', 'Arial', serif;
             font-size: 22px;
             text-align: right;
         }}
