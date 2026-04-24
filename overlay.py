@@ -101,9 +101,10 @@ class BreakOverlay(QWidget):
         middle = QHBoxLayout()
         middle.setSpacing(24)
 
-        # Task card
-        task_card = self._build_task_card()
-        middle.addWidget(task_card, 3)
+        # Task card (optional)
+        if self._config.get("show_tasks", True):
+            task_card = self._build_task_card()
+            middle.addWidget(task_card, 3)
 
         # Game card (optional)
         if self._config.get("show_games", True):
