@@ -155,44 +155,12 @@ class TypingGame(BaseGame):
                 self._timer.stop()
             self._finish(self._input.text())
 
-    def _finish(self, typed: str):
-        if self._timer:
-            self._timer.stop()
-        self._input.setReadOnly(True)
-
-        elapsed_sec = self._elapsed_ms() / 1000.0
-        wpm = self._calc_wpm(typed, elapsed_sec)
-        accuracy = self._calc_accuracy(typed)
-
-        self._wpm_label.setText(f"⚡ {wpm} WPM")
-        self._acc_label.setText(f"🎯 {accuracy}% accuracy")
-        self._stats_frame.show()
-
-        result_msg = self._wpm_comment(wpm, accuracy)
-        comment = QLabel(result_msg)
-        comment.setObjectName("ReminderLabel")
-        comment.setWordWrap(True)
-        self.layout().addWidget(comment)
-
-        self.finished.emit({
-            "game": "typing",
-            "wpm": wpm,
-            "accuracy": accuracy,
-            "elapsed_seconds": elapsed_sec,
-        })
-
     @staticmethod
     def _calc_wpm(typed: str, elapsed_sec: float) -> int:
         if elapsed_sec < 0.5:
             return 0
         words = len(typed.split())
         return int((words / elapsed_sec) * 60)
-
-    @staticmethod
-    def _calc_accuracy(typed: str) -> int:
-        target = content.get_typing_text()  # re-fetch won't help here
-        # We need the target from instance — use a simple char comparison
-        return 100  # Placeholder — instance method below overrides
 
     def _calc_accuracy_real(self, typed: str) -> int:
         if not self._target:
@@ -201,7 +169,7 @@ class TypingGame(BaseGame):
         total = max(len(self._target), len(typed))
         return int((correct / total) * 100) if total > 0 else 100
 
-    def _finish(self, typed: str):  # noqa: F811 — intentional override
+    def _finish(self, typed: str):
         if self._timer:
             self._timer.stop()
         self._input.setReadOnly(True)
