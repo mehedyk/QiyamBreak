@@ -10,13 +10,13 @@ Complete step-by-step guide for running and building QiyamBreak. Written for som
 2. [Install Python](#2-install-python)
 3. [Get the Code](#3-get-the-code)
 4. [Create a Virtual Environment](#4-create-a-virtual-environment)
-5. [Install Dependencies](#5-install-dependencies)
+5. [Inst1all Dependencies](#5-install-dependencies)
 6. [Run from Source (Development)](#6-run-from-source-development)
 7. [Using the App](#7-using-the-app)
 8. [Build the Executable (.exe / Linux binary)](#8-build-the-executable)
 9. [Run on Startup (Optional)](#9-run-on-startup-optional)
 10. [Uninstalling](#10-uninstalling)
-11. [Troubleshooting](#11-troubleshooting)
+1. [Troubleshooting](#11-troubleshooting)
 
 ---
 

@@ -33,7 +33,7 @@ def _single_instance_lock():
             pass
         return None
 
-from PyQt6.QtWidgets import QApplication, QMessageBox
+from PyQt6.QtWidgets import QApplication, QMessageBox, QSystemTrayIcon
 from PyQt6.QtCore import Qt, QTimer
 
 from config import load_config, save_config
@@ -86,7 +86,7 @@ class QiyamBreakApp:
                 "QiyamBreak is running 🕌",
                 f"Will remind you every {self._config['sit_minutes']} minutes. "
                 "Right-click the tray icon to configure.",
-                2,  # Information
+                QSystemTrayIcon.MessageIcon.Information,
                 5000,
             )
             self._config["first_run"] = False

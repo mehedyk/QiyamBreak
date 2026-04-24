@@ -3,36 +3,46 @@
 # Builds a single-file executable for Windows (.exe) and Linux (binary)
 #
 # Usage:
-#   Windows: pyinstaller qiyambreak.spec
-#   Linux:   pyinstaller qiyambreak.spec
+#   Windows: python -m PyInstaller qiyambreak.spec
+#   Linux:   python -m PyInstaller qiyambreak.spec
+#
+# Before building, clean old artifacts:
+#   Windows:  rmdir /s /q build dist
+#   Linux:    rm -rf build dist
 
-from PyInstaller.utils.hooks import collect_data_files
+from PyInstaller.utils.hooks import collect_all
+
+# Collect ALL PyQt6 components — DLLs, Qt plugins, platform drivers, etc.
+# Without this, the .exe crashes with "No module named PyQt6" on other machines.
+qt_datas, qt_binaries, qt_hiddenimports = collect_all('PyQt6')
 
 block_cipher = None
 
 a = Analysis(
     ['main.py'],
     pathex=['.'],
-    binaries=[],
+    binaries=qt_binaries,
     datas=[
-        # Include all content JSON files
+        # App content
         ('content/*.json', 'content'),
-        # Include themes
-        ('themes/*.json', 'themes'),
-        # Include assets (icons, fonts if any)
-        ('assets/', 'assets'),
+        ('themes/*.json',  'themes'),
+        ('assets/',        'assets'),
+        # PyQt6 runtime data (platform plugins, translations, etc.)
+        *qt_datas,
     ],
-    hiddenimports=[
+    hiddenimports=qt_hiddenimports + [
+        'PyQt6',
         'PyQt6.QtCore',
         'PyQt6.QtWidgets',
         'PyQt6.QtGui',
+        'PyQt6.QtNetwork',
         'PyQt6.sip',
     ],
     hookspath=[],
     hooksconfig={},
     runtime_hooks=[],
     excludes=[
-        # Exclude unused heavy modules to keep binary small
+        # Strip heavy unused modules to keep binary size down
         'tkinter',
         'matplotlib',
         'numpy',
@@ -66,7 +76,7 @@ exe = EXE(
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
-    upx=True,            # Compress the binary (smaller file size)
+    upx=False,           # Set to True only if UPX is installed; False is safer
     upx_exclude=[],
     runtime_tmpdir=None,
     console=False,       # No console window on Windows
@@ -74,6 +84,5 @@ exe = EXE(
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
-    # Windows icon (comment out on Linux)
     icon='assets/icons/qiyambreak.ico',
 )
