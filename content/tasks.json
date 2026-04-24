@@ -1,0 +1,98 @@
+[
+  {
+    "id": 1,
+    "type": "physical",
+    "icon": "🚶",
+    "title": "Walk Around",
+    "instruction": "Stand up and walk around your room or office for at least 1 minute. Swing your arms. Let your body move.",
+    "duration_seconds": 60
+  },
+  {
+    "id": 2,
+    "type": "stretch",
+    "icon": "🧘",
+    "title": "Neck & Shoulder Stretch",
+    "instruction": "Tilt your head to the right, hold 10 seconds. Then left. Then slowly roll your shoulders backward 5 times. Release that tension.",
+    "duration_seconds": 60
+  },
+  {
+    "id": 3,
+    "type": "hydration",
+    "icon": "💧",
+    "title": "Drink Water",
+    "instruction": "Get up, go fill a glass of water, and drink it slowly. Staying hydrated improves focus and reduces headaches.",
+    "duration_seconds": 60
+  },
+  {
+    "id": 4,
+    "type": "eye",
+    "icon": "👁️",
+    "title": "20-20-20 Eye Rest",
+    "instruction": "Look at something at least 20 feet (6m) away for 20 seconds. Blink slowly 10 times. Your eyes have been working hard — give them a break.",
+    "duration_seconds": 40
+  },
+  {
+    "id": 5,
+    "type": "stretch",
+    "icon": "🤸",
+    "title": "Wrist & Forearm Stretch",
+    "instruction": "Extend your right arm, pull fingers back gently with your left hand — hold 15s. Repeat other side. Then make fists and open wide 5 times.",
+    "duration_seconds": 60
+  },
+  {
+    "id": 6,
+    "type": "breathing",
+    "icon": "🌬️",
+    "title": "Deep Breathing",
+    "instruction": "Breathe in deeply for 4 counts. Hold for 4 counts. Exhale slowly for 6 counts. Repeat 5 times. This activates your parasympathetic nervous system.",
+    "duration_seconds": 60
+  },
+  {
+    "id": 7,
+    "type": "physical",
+    "icon": "🏋️",
+    "title": "10 Standing Squats",
+    "instruction": "Stand with feet shoulder-width apart. Lower slowly for 3 counts, rise for 2. Do 10 reps. These counter the effects of prolonged sitting.",
+    "duration_seconds": 60
+  },
+  {
+    "id": 8,
+    "type": "stretch",
+    "icon": "🙆",
+    "title": "Back & Spine Stretch",
+    "instruction": "Stand up tall. Clasp hands and reach up to the sky, lean gently to the right for 10s, then left. Then hug your knees one at a time if possible.",
+    "duration_seconds": 60
+  },
+  {
+    "id": 9,
+    "type": "reflection",
+    "icon": "🤲",
+    "title": "Make Dhikr",
+    "instruction": "Leave your screen. Say SubhanAllah 33 times, Alhamdulillah 33 times, Allahu Akbar 34 times. Let your tongue and heart rest in remembrance.",
+    "duration_seconds": 120
+  },
+  {
+    "id": 10,
+    "type": "physical",
+    "icon": "🦵",
+    "title": "Calf Raises",
+    "instruction": "Stand near a wall for balance. Rise up on your toes, hold 2 seconds, lower slowly. Do 15 reps. Improves circulation in your legs.",
+    "duration_seconds": 60
+  },
+  {
+    "id": 11,
+    "type": "eye",
+    "icon": "🌿",
+    "title": "Look at Something Green",
+    "instruction": "Go to a window or find a plant. Focus on greenery for 30 seconds. Natural scenes reduce cortisol. If no window is available, close your eyes and visualize.",
+    "duration_seconds": 60
+  },
+  {
+    "id": 12,
+    "type": "reflection",
+    "icon": "📿",
+    "title": "Gratitude Moment",
+    "instruction": "Step away from your screen. Think of 3 specific blessings from today — no matter how small. Say Alhamdulillah for each one. Gratitude rewires the brain.",
+    "duration_seconds": 90
+  }
+]
