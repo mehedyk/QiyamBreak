@@ -94,17 +94,19 @@ class QiyamBreakApp:
 
     def _on_tick(self, elapsed: int, total: int):
         """Called every second by the timer thread. UI updates via QTimer in main thread."""
-        # PyQt6 signals from non-main threads need care — use QTimer.singleShot
         QTimer.singleShot(0, lambda: self._tray.update_status(elapsed, total))
 
     def _trigger_break(self):
-        """Called when sitting time is up. Shows overlay."""
+        """Called from timer thread — must marshal to main thread before touching UI."""
+        QTimer.singleShot(0, self._trigger_break_main_thread)
+
+    def _trigger_break_main_thread(self):
+        """Runs on the main thread. Safe to create widgets and show overlay."""
         if self._overlay is not None:
             return  # Already showing
 
         self._tray.show_break_notification()
-
-        QTimer.singleShot(0, self._show_overlay)
+        self._show_overlay()
 
     def _show_overlay(self):
         self._overlay = BreakOverlay(config=self._config)
