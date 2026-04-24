@@ -277,7 +277,7 @@ class SettingsWindow(QDialog):
         info_lines = [
             ("App", "QiyamBreak — قيام بريك"),
             ("Version", "1.0.0"),
-            ("Author", "S.M. Mehedy Kawser (Klinger)"),
+            ("Author", "S.M. Mehedy Kawser"),
             ("GitHub", "github.com/mehedyk"),
             ("License", "QSAL v1.0 — See LICENSE file"),
             ("Config file", str(get_config_path())),
