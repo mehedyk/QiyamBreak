@@ -394,7 +394,7 @@ class AboutWindow(QDialog):
 
         # Author card
         layout.addWidget(section("Author", [
-            ("Name", "S.M. Mehedy Kawser (Klinger)"),
+            ("Name", "S.M. Mehedy Kawser"),
             ("GitHub", '<a href="https://github.com/mehedyk" style="color:#64b5f6;">github.com/mehedyk</a>'),
             ("Portfolio", '<a href="https://mehedy.netlify.app" style="color:#64b5f6;">mehedy.netlify.app</a>'),
             ("Intention", "Built for the Muslim community and all desk workers"),
