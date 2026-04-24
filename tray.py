@@ -4,11 +4,28 @@ Lives in the system tray. Right-click menu for all controls.
 """
 
 import sys
+import os
+from pathlib import Path
 from typing import Callable, Optional
 
 from PyQt6.QtWidgets import QSystemTrayIcon, QMenu, QApplication
 from PyQt6.QtGui import QIcon, QPixmap, QPainter, QColor, QFont
 from PyQt6.QtCore import Qt, QTimer
+
+
+def _load_app_icon() -> QIcon:
+    """
+    Try to load the real icon from assets/. Falls back to programmatic icon.
+    Supports .ico (Windows) and .png (Linux/cross-platform).
+    """
+    assets_dir = Path(__file__).parent / "assets" / "icons"
+    for name in ("qiyambreak.png", "qiyambreak.ico"):
+        path = assets_dir / name
+        if path.exists():
+            icon = QIcon(str(path))
+            if not icon.isNull():
+                return icon
+    return _make_tray_icon("#e8952a", "Q")
 
 
 def _make_tray_icon(color: str = "#e8952a", letter: str = "Q") -> QIcon:
@@ -59,7 +76,7 @@ class TrayIcon(QSystemTrayIcon):
         self._on_quit = on_quit
         self._paused = False
 
-        self.setIcon(_make_tray_icon("#e8952a", "Q"))
+        self.setIcon(_load_app_icon())
         self.setToolTip("QiyamBreak — Tracking sitting time")
 
         self._build_menu()
