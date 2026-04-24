@@ -2,7 +2,7 @@
 
 **Version:** 1.0  
 **Effective Date:** 2026-04-23  
-**Author:** S.M. Mehedy Kawser (Klinger)
+**Author:** S.M. Mehedy Kawser
 
 ---
 
