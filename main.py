@@ -2,7 +2,7 @@
 QiyamBreak — قيام بريك
 Main entry point. Wires timer, tray, overlay, and settings together.
 
-Author: S.M. Mehedy Kawser (Klinger)
+Author: S.M. Mehedy Kawser
 License: QSAL v1.0
 """
 
@@ -33,6 +33,7 @@ def _single_instance_lock():
             pass
         return None
 
+
 from PyQt6.QtWidgets import QApplication, QMessageBox, QSystemTrayIcon
 from PyQt6.QtCore import Qt, QTimer
 
@@ -55,29 +56,34 @@ class QiyamBreakApp:
         self._overlay: BreakOverlay | None = None
         self._settings_win: SettingsWindow | None = None
         self._about_win: AboutWindow | None = None
+        self._break_triggered = False  # Guard against double-trigger
 
         # Load content and themes
         content.load()
         theme_manager.load()
 
-        # Timer
+        # Timer — no callbacks, polled from main thread via QTimer below
         self._timer = SittingTimer(
             sit_minutes=self._config["sit_minutes"],
-            on_break=self._trigger_break,
-            on_tick=self._on_tick,
         )
 
         # Tray
         self._tray = TrayIcon(
             on_pause_resume=self._on_pause_resume,
-            on_test_break=self._trigger_break,
+            on_test_break=self._show_overlay,
             on_settings=self._open_settings,
             on_about=self._open_about,
             on_quit=self._quit,
         )
         self._tray.show()
 
-        # Start timer
+        # Main-thread poll timer — fires every second, 100% thread-safe
+        self._poll_timer = QTimer()
+        self._poll_timer.setInterval(1000)
+        self._poll_timer.timeout.connect(self._poll)
+        self._poll_timer.start()
+
+        # Start background sit timer
         self._timer.start()
 
         # First-run welcome
@@ -92,23 +98,29 @@ class QiyamBreakApp:
             self._config["first_run"] = False
             save_config(self._config)
 
-    def _on_tick(self, elapsed: int, total: int):
-        """Called every second by the timer thread. UI updates via QTimer in main thread."""
-        QTimer.singleShot(0, lambda: self._tray.update_status(elapsed, total))
+    def _poll(self):
+        """
+        Runs every second on the main thread via QTimer.
+        Reads timer state and triggers break if time is up.
+        No cross-thread calls — completely safe.
+        """
+        elapsed = self._timer.elapsed_seconds
+        total = self._timer.sit_seconds
 
-    def _trigger_break(self):
-        """Called from timer thread — must marshal to main thread before touching UI."""
-        QTimer.singleShot(0, self._trigger_break_main_thread)
+        # Update tray display
+        self._tray.update_status(elapsed, total)
 
-    def _trigger_break_main_thread(self):
-        """Runs on the main thread. Safe to create widgets and show overlay."""
-        if self._overlay is not None:
-            return  # Already showing
-
-        self._tray.show_break_notification()
-        self._show_overlay()
+        # Trigger break when time is up
+        if elapsed >= total and not self._break_triggered and not self._timer.is_paused:
+            self._break_triggered = True
+            self._timer.pause()
+            self._tray.show_break_notification()
+            self._show_overlay()
 
     def _show_overlay(self):
+        """Show the break overlay. Safe to call from main thread only."""
+        if self._overlay is not None:
+            return  # Already showing
         self._overlay = BreakOverlay(config=self._config)
         self._overlay.dismissed.connect(self._on_break_dismissed)
         self._overlay.showFullScreen()
@@ -116,6 +128,7 @@ class QiyamBreakApp:
     def _on_break_dismissed(self, stats: dict):
         """Called when user dismisses the overlay."""
         self._overlay = None
+        self._break_triggered = False  # Reset so next break can trigger
 
         # Update stats
         self._config["total_breaks_taken"] = self._config.get("total_breaks_taken", 0) + 1
@@ -167,6 +180,7 @@ class QiyamBreakApp:
 
     def _quit(self):
         save_config(self._config)
+        self._poll_timer.stop()
         self._timer.stop()
         self._tray.hide()
         self._app.quit()
@@ -194,7 +208,6 @@ def main():
         sys.exit(0)
 
     # Check tray support
-    from PyQt6.QtWidgets import QSystemTrayIcon
     if not QSystemTrayIcon.isSystemTrayAvailable():
         msg = QMessageBox()
         msg.setWindowTitle("QiyamBreak")
