@@ -11,15 +11,26 @@ import os
 
 # ── Prevent multiple instances ─────────────────────────────────────────────────
 def _single_instance_lock():
-    """Return a lock object. If lock fails, another instance is running."""
-    import tempfile, fcntl
+    """
+    Return a lock object. If lock fails, another instance is running.
+    Cross-platform: uses msvcrt on Windows, fcntl on Linux/macOS.
+    """
+    import tempfile
     lock_path = os.path.join(tempfile.gettempdir(), "qiyambreak.lock")
     try:
         lock_file = open(lock_path, "w")
-        if sys.platform != "win32":
+        if sys.platform == "win32":
+            import msvcrt
+            msvcrt.locking(lock_file.fileno(), msvcrt.LK_NBLCK, 1)
+        else:
+            import fcntl
             fcntl.flock(lock_file, fcntl.LOCK_EX | fcntl.LOCK_NB)
         return lock_file  # Keep reference alive
     except (IOError, OSError):
+        try:
+            lock_file.close()
+        except Exception:
+            pass
         return None
 
 from PyQt6.QtWidgets import QApplication, QMessageBox
