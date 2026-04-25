@@ -19,7 +19,7 @@ from theme_manager import theme_manager
 def _open_about_window(config: dict):
     """Standalone helper — settings.py can't import main.py (circular). Opens About directly."""
     from about import AboutWindow
-    win = AboutWindow(config, version="1.0.0")
+    win = AboutWindow(config, version="1.0.2")
     win.exec()  # Modal when opened from settings
 
 
@@ -276,7 +276,7 @@ class SettingsWindow(QDialog):
 
         info_lines = [
             ("App", "QiyamBreak — قيام بريك"),
-            ("Version", "1.0.0"),
+            ("Version", "1.0.2"),
             ("Author", "S.M. Mehedy Kawser"),
             ("GitHub", "github.com/mehedyk"),
             ("License", "QSAL v1.0 — See LICENSE file"),

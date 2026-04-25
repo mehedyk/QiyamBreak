@@ -5,7 +5,7 @@ Format: [Version] — Date — Summary
 
 ---
 
-## [1.0.0] — 2026-04-23
+## [1.0.2] — 2026-04-23
 
 ### Initial Release 🎉
 

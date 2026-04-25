@@ -159,7 +159,7 @@ class QiyamBreakApp:
             self._about_win.raise_()
             self._about_win.activateWindow()
             return
-        self._about_win = AboutWindow(self._config, version="1.0.0")
+        self._about_win = AboutWindow(self._config, version="1.0.2")
         self._about_win.finished.connect(lambda _: setattr(self, "_about_win", None))
         self._about_win.show()
 
@@ -195,7 +195,7 @@ def main():
     app = QApplication(sys.argv)
     app.setQuitOnLastWindowClosed(False)  # Keep running when windows close
     app.setApplicationName("QiyamBreak")
-    app.setApplicationVersion("1.0.0")
+    app.setApplicationVersion("1.0.2")
     app.setOrganizationName("mehedyk")
 
     # Single instance check

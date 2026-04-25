@@ -201,7 +201,7 @@ class AboutWindow(QDialog):
     About | Privacy Policy | Terms of Use | System Requirements | Changelog
     """
 
-    def __init__(self, config: dict, version: str = "1.0.0", parent=None):
+    def __init__(self, config: dict, version: str = "1.0.2", parent=None):
         super().__init__(parent)
         self._config = config
         self._version = version
